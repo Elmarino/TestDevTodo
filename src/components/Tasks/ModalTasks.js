@@ -7,6 +7,7 @@ import {
   Alert,
   StyleSheet,
   TextInput,
+  Keyboard,
 } from 'react-native';
 
 import colors, {
@@ -14,6 +15,7 @@ import colors, {
   defaultScreenStyles,
   shadowStyles,
 } from './../../global/constants';
+import {TouchableWithoutFeedback} from 'react-native-gesture-handler';
 
 export default class ModalTasks extends Component {
   constructor() {
@@ -60,32 +62,38 @@ export default class ModalTasks extends Component {
           Alert.alert('Modal has been closed.');
         }}>
         <View style={[styles.wrapper, {backgroundColor: colors.fushia}]}>
-          <Text style={styles.title}>Donnez un titre à la tâche</Text>
-          <TextInput
-            onChangeText={value => this.handleText(value)}
-            placeholder={'Faire les courses'}
-            value={taskName}
-            style={styles.taskInput}
-            keyboardType={'ascii-capable'}
-            autoCapitalize="none"
-            returnKeyType={'done'}
-            placeholderTextColor={colors.middlePurple}
-          />
+          <TouchableWithoutFeedback
+            style={styles.wrapper}
+            onPress={() => Keyboard.dismiss()}>
+            <>
+              <Text style={styles.title}>Donnez un titre à la tâche</Text>
+              <TextInput
+                onChangeText={value => this.handleText(value)}
+                placeholder={'Faire les courses'}
+                value={taskName}
+                style={styles.taskInput}
+                keyboardType={'ascii-capable'}
+                autoCapitalize="none"
+                returnKeyType={'done'}
+                placeholderTextColor={colors.middlePurple}
+              />
 
-          <View style={styles.buttons}>
-            <TouchableOpacity
-              style={[styles.validate, {backgroundColor: colors.cancel}]}
-              onPress={this.closeModal}>
-              <Text style={[styles.textButton, {color: colors.fushia}]}>
-                Annuler
-              </Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={styles.validate}
-              onPress={this.setModalInvisible}>
-              <Text style={styles.textButton}>Valider</Text>
-            </TouchableOpacity>
-          </View>
+              <View style={styles.buttons}>
+                <TouchableOpacity
+                  style={[styles.validate, {backgroundColor: colors.cancel}]}
+                  onPress={this.closeModal}>
+                  <Text style={[styles.textButton, {color: colors.fushia}]}>
+                    Annuler
+                  </Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  style={styles.validate}
+                  onPress={this.setModalInvisible}>
+                  <Text style={styles.textButton}>Valider</Text>
+                </TouchableOpacity>
+              </View>
+            </>
+          </TouchableWithoutFeedback>
         </View>
       </Modal>
     );
